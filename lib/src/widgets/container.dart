@@ -39,12 +39,15 @@ class EasyLoadingContainer extends StatefulWidget {
   final EasyLoadingMaskType? maskType;
   final Completer<void>? completer;
   final bool animation;
+  final VoidCallback? onDismiss;
+
 
   const EasyLoadingContainer({
     Key? key,
     this.indicator,
     this.status,
     this.dismissOnTap,
+    this.onDismiss,
     this.toastPosition,
     this.maskType,
     this.completer,
@@ -131,7 +134,7 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
   }
 
   void _onTap() async {
-    if (_dismissOnTap) await EasyLoading.dismiss();
+    if (_dismissOnTap) await EasyLoading.dismiss(onDismiss: widget.onDismiss);
   }
 
   @override

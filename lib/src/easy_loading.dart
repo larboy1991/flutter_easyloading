@@ -251,12 +251,14 @@ class EasyLoading {
     Widget? indicator,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    VoidCallback? onDismiss,
   }) {
     Widget w = indicator ?? (_instance.indicatorWidget ?? LoadingIndicator());
     return _instance._show(
       status: status,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
+      onDismiss: onDismiss,
       w: w,
     );
   }
@@ -387,8 +389,10 @@ class EasyLoading {
   /// dismiss loading
   static Future<void> dismiss({
     bool animation = true,
+    VoidCallback? onDismiss,
   }) {
     // cancel timer
+    onDismiss?.call();
     _instance._cancelTimer();
     return _instance._dismiss(animation);
   }
@@ -419,6 +423,7 @@ class EasyLoading {
     Duration? duration,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
+    VoidCallback? onDismiss,
     EasyLoadingToastPosition? toastPosition,
   }) async {
     assert(
@@ -471,6 +476,7 @@ class EasyLoading {
       toastPosition: toastPosition,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
+      onDismiss:onDismiss,
       completer: completer,
     );
     completer.future.whenComplete(() {
